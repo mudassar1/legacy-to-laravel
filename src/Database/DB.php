@@ -80,6 +80,15 @@ function &DB($params = '', $query_builder_override = null)
         }
 
         $params = $db['connections'][$active_group];
+
+        if(function_exists("tenancy")){
+
+            if(isset(tenancy()->tenant, tenancy()->tenant->tenancy_db_name)) {
+                $params['database'] = tenancy()->tenant->tenancy_db_name;
+            }
+
+        }
+
     } elseif (is_string($params)) {
         /**
          * Parse the URL from the DSN string
