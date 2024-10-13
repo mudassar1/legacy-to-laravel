@@ -1,0 +1,59 @@
+{
+    "name": "mudassar1/legacy-to-laravel",
+    "type": "library",
+    "description": "Help upgrade from CodeIgniter3 to Laravel",
+    "keywords": ["codeigniter","codeigniter3", "laravel", "laravel-framework"],
+    "homepage": "https://github.com/mudassar1/legacy-to-laravel",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kenji Suzuki",
+            "homepage": "https://github.com/kenjis"
+        },
+        {
+            "name": "Agung Sugiarto",
+            "homepage": "https://github.com/agungsugiarto"
+        },
+        {
+            "name": "Andi Fahruddin Akas",
+            "homepage": "https://github.com/andifahruddinakas"
+        },
+        {
+            "name": "Mudassar Yaseen",
+            "homepage": "https://github.com/mudassar1"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "laravel/framework": "^11.27.2"
+    },
+    "require-dev": {
+        "mikey179/vfsstream": "^1.6.11",
+        "friendsofphp/php-cs-fixer": "^3.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "mudassar1\\Legacy\\": "src/"
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        },
+        "laravel": {
+            "providers": [
+                "mudassar1\\Legacy\\LegacyServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
