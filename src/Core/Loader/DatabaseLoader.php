@@ -36,7 +36,7 @@ class DatabaseLoader
 
     public function __construct(ControllerPropertyInjector $injector)
     {
-        require_once __DIR__.'../../../database/DB.php';
+        require_once __DIR__.'../../../Database/DB.php';
 
         $this->injector = $injector;
     }
