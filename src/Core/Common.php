@@ -109,6 +109,59 @@ if (! function_exists('html_escape')) {
     }
 }
 
+if (! function_exists('esc')) {
+    /**
+     * Escapes data for output in various contexts, like HTML, JavaScript, CSS, or URL.
+     *
+     * @param mixed  $data
+     * @param string $context
+     * @param string|null $encoding
+     *
+     * @return mixed
+     */
+    function esc($data, string $context = 'html', string $encoding = null)
+    {
+        if (empty($data)) {
+            return $data;
+        }
+
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = esc($value, $context, $encoding);
+            }
+
+            return $data;
+        }
+
+        if ($data instanceof Stringable) {
+            $data = (string) $data;
+        }
+
+        // The encoding argument is largely for better compatibility with
+        // different versions of PHP and in case something like a browser
+        // or other non-standard encoder doesn't handle utf-8 well.
+        $encoding = $encoding ?? 'UTF-8';
+
+        switch ($context) {
+            case 'html':
+                return htmlspecialchars($data, ENT_QUOTES, $encoding);
+
+            case 'js':
+                return json_encode($data);
+
+            case 'css':
+                return str_replace(['<', '>', '&'], ['\\3c ', '\\3e ', '\\26 '], $data);
+
+            case 'url':
+                return rawurlencode($data);
+
+            default:
+                throw new InvalidArgumentException("Unknown context: {$context}");
+        }
+    }
+}
+
+
 // ------------------------------------------------------------------------
 
 if (! function_exists('is_php')) {
