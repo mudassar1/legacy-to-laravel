@@ -43,14 +43,14 @@ namespace mudassar1\Legacy\Database;
 /**
  * Initialize the database.
  *
+ * @param string|string[] $params
+ * @param bool $query_builder_override Determines if query builder should be used or not
+ * @see      https://codeigniter.com/userguide3/database/
+ *
  * @category  Database
  *
  * @author    EllisLab Dev Team
  *
- * @see      https://codeigniter.com/userguide3/database/
- *
- * @param string|string[] $params
- * @param bool            $query_builder_override Determines if query builder should be used or not
  */
 function &DB($params = '', $query_builder_override = null)
 {
@@ -86,7 +86,14 @@ function &DB($params = '', $query_builder_override = null)
             if(isset(tenancy()->tenant, tenancy()->tenant->tenancy_db_name)) {
                 $params['database'] = tenancy()->tenant->tenancy_db_name;
             }
+            if (function_exists("config") && !empty(config('database.connections.' . $active_group))) {
+                $dbConfig           = config('database.connections.' . $active_group);
 
+                $params['hostname'] = $dbConfig['host'];
+                $params['port']     = $dbConfig['port'];
+                $params['username'] = $dbConfig['username'];
+                $params['password'] = $dbConfig['password'];
+            }
         }
 
     } elseif (is_string($params)) {
@@ -179,6 +186,7 @@ function &DB($params = '', $query_builder_override = null)
 
     // Instantiate the DB adapter
     $driver = '\mudassar1\Legacy\Database\CI_DB_'.$params['dbdriver'].'_driver';
+    /** @var CI_DB $DB */
     $DB = new $driver($params);
 
     // Check for a subdriver
