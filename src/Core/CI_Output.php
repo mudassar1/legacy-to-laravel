@@ -80,8 +80,8 @@ class CI_Output
      */
     public function set_output($output)
     {
-        $this->response->setContent($output);
 
+        $this->response->setContent($output);
         return $this;
     }
 

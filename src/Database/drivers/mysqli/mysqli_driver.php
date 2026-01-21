@@ -122,7 +122,7 @@ class CI_DB_mysqli_driver extends CI_DB
     {
         // PHP 8.1 changes default error handling mode from silent to exceptions - reverse that
         if (is_php('8.1')) {
-            $mysqli_driver = new CI_DB_mysqli_driver($this);
+            $mysqli_driver = new CI_DB_mysqli_driver($this);// new mysqli_driver();
             $mysqli_driver->report_mode = MYSQLI_REPORT_OFF;
         }
 

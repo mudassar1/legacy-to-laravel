@@ -131,8 +131,8 @@ class LibraryLoader
     {
         $instance = new $classname($params);
 
-        $message = 'Library "'.$classname.'" created';
-        DebugLog::log(__METHOD__, $message);
+//        $message = 'Library "'.$classname.'" created';
+//        DebugLog::log(__METHOD__, $message);
 
         return $instance;
     }
@@ -150,11 +150,11 @@ class LibraryLoader
             if (! $reflection->hasProperty($property)) {
                 $obj->$property = $instance;
 
-                $message = $classname.'::$'.$property.' injected';
-                DebugLog::log(__METHOD__, $message);
+//                $message = $classname.'::$'.$property.' injected';
+//                DebugLog::log(__METHOD__, $message);
             } else {
-                $message = $classname.'::$'.$property.' already exists';
-                DebugLog::log(__METHOD__, $message);
+//                $message = $classname.'::$'.$property.' already exists';
+//                DebugLog::log(__METHOD__, $message);
             }
         }
     }

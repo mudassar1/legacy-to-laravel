@@ -63,7 +63,7 @@ class CI_Email
      */
     public function __construct($config = null)
     {
-        $this->email = Services::email($config);
+        $this->email = null;// Services::email($config);
     }
 
     /**

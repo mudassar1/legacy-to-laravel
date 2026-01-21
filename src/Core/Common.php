@@ -109,6 +109,8 @@ if (! function_exists('html_escape')) {
     }
 }
 
+
+
 if (! function_exists('esc')) {
     /**
      * Escapes data for output in various contexts, like HTML, JavaScript, CSS, or URL.
@@ -136,6 +138,14 @@ if (! function_exists('esc')) {
         if ($data instanceof Stringable) {
             $data = (string) $data;
         }
+        if($data == null){
+            $data = '';
+        }
+        if(is_integer($data)){
+//            dd($data);
+//            throw new Exception('not implemented');
+            $data = "".$data;
+        }
 
         // The encoding argument is largely for better compatibility with
         // different versions of PHP and in case something like a browser
@@ -160,7 +170,6 @@ if (! function_exists('esc')) {
         }
     }
 }
-
 
 // ------------------------------------------------------------------------
 

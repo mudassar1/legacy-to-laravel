@@ -53,6 +53,7 @@ namespace mudassar1\Legacy\Database;
  *
  * @see		https://codeigniter.com/userguide3/database/
  */
+#[\AllowDynamicProperties]
 abstract class CI_DB_driver
 {
     /**
@@ -377,7 +378,7 @@ abstract class CI_DB_driver
             }
         }
 
-        logger()->info('Database Driver Class Initialized');
+//        logger()->info('Database Driver Class Initialized');
     }
 
     // --------------------------------------------------------------------

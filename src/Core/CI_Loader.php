@@ -90,8 +90,11 @@ class CI_Loader
     {
         $this->injectLoadedClassesToView();
 
+        if($vars == []){
+            $vars = json_decode(json_encode(get_defined_vars()), true);
+        }
         if ($return) {
-            return view($view, $vars);
+            return view($view, $vars)->render();
         }
 
         echo view($view, $vars);

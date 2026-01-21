@@ -68,6 +68,7 @@ class ModelLoader
         $classname = $this->modelResolver->resolve($model);
         $instance = $this->createInstance($classname);
 
+
         $this->injector->inject($property, $instance);
         $this->loaded($property, $instance);
     }
@@ -114,8 +115,8 @@ class ModelLoader
     {
         $instance = new $classname();
 
-        $message = 'Model "'.$classname.'" created';
-        DebugLog::log(__METHOD__, $message);
+//        $message = 'Model "'.$classname.'" created';
+//        DebugLog::log(__METHOD__, $message);
 
         return $instance;
     }
@@ -133,11 +134,11 @@ class ModelLoader
             if (! $reflection->hasProperty($property)) {
                 $obj->$property = $instance;
 
-                $message = $classname.'::$'.$property.' injected';
-                DebugLog::log(__METHOD__, $message);
+//                $message = $classname.'::$'.$property.' injected';
+//                DebugLog::log(__METHOD__, $message);
             } else {
-                $message = $classname.'::$'.$property.' already exists';
-                DebugLog::log(__METHOD__, $message);
+//                $message = $classname.'::$'.$property.' already exists';
+//                DebugLog::log(__METHOD__, $message);
             }
         }
     }

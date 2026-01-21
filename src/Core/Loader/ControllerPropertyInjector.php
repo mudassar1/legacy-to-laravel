@@ -18,6 +18,7 @@ namespace mudassar1\Legacy\Core\Loader;
 use mudassar1\Legacy\Core\CI_Controller;
 use mudassar1\Legacy\Internal\DebugLog;
 
+#[\AllowDynamicProperties]
 class ControllerPropertyInjector
 {
     /** @var CI_Controller */
@@ -31,13 +32,16 @@ class ControllerPropertyInjector
     public function inject(string $property, object $obj): void
     {
         if (property_exists($this->controller, $property)) {
-            $message = get_class($this->controller).'::$'.$property.' already exists';
-            DebugLog::log(__METHOD__, $message);
+//            $message = get_class($this->controller).'::$'.$property.' already exists';
+//            DebugLog::log(__METHOD__, $message);
 
             return;
         }
 
+        $oldErrorReporting = error_reporting(error_reporting() & ~E_DEPRECATED);
         $this->controller->$property = $obj;
+        error_reporting($oldErrorReporting);
+
     }
 
     public function injectMultiple(array $instances): void

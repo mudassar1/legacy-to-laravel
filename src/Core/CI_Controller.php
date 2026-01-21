@@ -36,6 +36,7 @@ use mudassar1\Legacy\Internal\DebugLog;
  * @property \mudassar1\Legacy\Core\CI_URI                  $uri
  * @property \mudassar1\Legacy\Core\CI_Utf8                 $utf8
  */
+#[\AllowDynamicProperties]
 class CI_Controller extends Controller
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;

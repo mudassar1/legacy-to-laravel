@@ -34,7 +34,8 @@ class ValidationRuleMaker
         $this->ci3Config = $ci3Config;
         $this->rules = [];
 
-        $this->rules[] = 'uploaded['.$fieldName.']';
+        // Laravel's equivalent of 'uploaded' would be 'file' for file validation.
+        $this->rules[] = 'file';
 
         $this->setExtIn();
         $this->setMaxSize();
@@ -42,13 +43,13 @@ class ValidationRuleMaker
 
         if (isset($this->ci3Config['min_width'])) {
             throw new NotSupportedException(
-                'config "min_width" is removed in CI4.'
+                'config "min_width" is not supported in Laravel validation.'
             );
         }
 
         if (isset($this->ci3Config['min_height'])) {
             throw new NotSupportedException(
-                'config "min_height" is removed in CI4.'
+                'config "min_height" is not supported in Laravel validation.'
             );
         }
 
@@ -62,15 +63,15 @@ class ValidationRuleMaker
         if (isset($this->ci3Config['allowed_types'])) {
             $extsArray = explode('|', $this->ci3Config['allowed_types']);
             $exts = implode(',', $extsArray);
-            $this->rules[] = 'ext_in['.$this->fieldName.','.$exts.']';
+            $this->rules[] = 'mimes:' . implode(',', $extsArray);
         }
     }
 
     private function setMaxSize()
     {
         if (isset($this->ci3Config['max_size'])) {
-            $this->rules[] = 'max_size['.$this->fieldName.','
-                .$this->ci3Config['max_size'].']';
+            // Convert kilobytes to bytes as Laravel requires max size in kilobytes.
+            $this->rules[] = 'max:' . $this->ci3Config['max_size'];
         }
     }
 
@@ -83,8 +84,6 @@ class ValidationRuleMaker
             return;
         }
 
-        $this->rules[] = 'max_dims['.$this->fieldName.','
-            .$this->ci3Config['max_width'].','
-            .$this->ci3Config['max_height'].']';
+        $this->rules[] = 'dimensions:max_width=' . $maxWidth . ',max_height=' . $maxHeight;
     }
 }

@@ -29,14 +29,14 @@ namespace mudassar1\Legacy\Database;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author	EllisLab Dev Team
- * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
- * @copyright	Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
- * @license	https://opensource.org/licenses/MIT	MIT License
+ * @author    EllisLab Dev Team
+ * @copyright    Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
+ * @copyright    Copyright (c) 2014 - 2019, British Columbia Institute of Technology (https://bcit.ca/)
+ * @copyright    Copyright (c) 2019 - 2022, CodeIgniter Foundation (https://codeigniter.com/)
+ * @license    https://opensource.org/licenses/MIT	MIT License
  *
- * @see	https://codeigniter.com
- * @since	Version 1.0.0
+ * @see    https://codeigniter.com
+ * @since    Version 1.0.0
  * @filesource
  */
 
@@ -57,13 +57,13 @@ function &DB($params = '', $query_builder_override = null)
     // Load the DB config file if a DSN string wasn't passed
     if (is_string($params) && strpos($params, '://') === false) {
         // Is the config file in the environment folder?
-        if (! file_exists($file_path = config_path().'/database.php')) {
+        if (!file_exists($file_path = config_path() . '/database.php')) {
             show_error('The configuration file database.php does not exist.');
         }
 
         $db = include $file_path;
 
-        if (! isset($db) or count($db) === 0) {
+        if (!isset($db) or count($db) === 0) {
             show_error('No database connection settings were found in the database config file.');
         }
 
@@ -73,17 +73,16 @@ function &DB($params = '', $query_builder_override = null)
             $active_group = $db['default'];
         }
 
-        if (! isset($db['default'])) {
+        if (!isset($db['default'])) {
             show_error('You have not specified a database connection group via default in your config/database.php file.');
-        } elseif (! isset($db['connections'][$active_group])) {
-            show_error('You have specified an invalid database connection group ('.$active_group.') in your config/database.php file.');
+        } elseif (!isset($db['connections'][$active_group])) {
+            show_error('You have specified an invalid database connection group (' . $active_group . ') in your config/database.php file.');
         }
 
         $params = $db['connections'][$active_group];
 
-        if(function_exists("tenancy")){
-
-            if(isset(tenancy()->tenant, tenancy()->tenant->tenancy_db_name)) {
+        if (function_exists("tenancy")) {
+            if (isset(tenancy()->tenant, tenancy()->tenant->tenancy_db_name)) {
                 $params['database'] = tenancy()->tenant->tenancy_db_name;
             }
             if (function_exists("config") && !empty(config('database.connections.' . $active_group))) {
@@ -108,10 +107,11 @@ function &DB($params = '', $query_builder_override = null)
             show_error('Invalid DB Connection String');
         }
 
+
         $params = [
             'dbdriver' => $dsn['scheme'],
             'hostname' => isset($dsn['host']) ? rawurldecode($dsn['host']) : '',
-            'port' => isset($dsn['port']) ? rawurldecode($dsn['port']) : '',
+            'port'     => isset($dsn['port']) ? rawurldecode($dsn['port']) : '',
             'username' => isset($dsn['user']) ? rawurldecode($dsn['user']) : '',
             'password' => isset($dsn['pass']) ? rawurldecode($dsn['pass']) : '',
             'database' => isset($dsn['path']) ? rawurldecode(substr($dsn['path'], 1)) : '',
@@ -145,15 +145,15 @@ function &DB($params = '', $query_builder_override = null)
     // Backwards compatibility work-around for keeping the
     // $active_record config variable working. Should be
     // removed in v3.1
-    elseif (! isset($query_builder) && isset($active_record)) {
+    elseif (!isset($query_builder) && isset($active_record)) {
         $query_builder = $active_record;
     }
 
-    require_once dirname(__FILE__).'/DB_driver.php';
+    require_once dirname(__FILE__) . '/DB_driver.php';
 
-    if (! isset($query_builder) or $query_builder === true) {
-        require_once dirname(__FILE__).'/DB_query_builder.php';
-        if (! class_exists(__NAMESPACE__.'\CI_DB', false)) {
+    if (!isset($query_builder) or $query_builder === true) {
+        require_once dirname(__FILE__) . '/DB_query_builder.php';
+        if (!class_exists(__NAMESPACE__ . '\CI_DB', false)) {
             /**
              * CI_DB.
              *
@@ -166,7 +166,7 @@ function &DB($params = '', $query_builder_override = null)
             {
             }
         }
-    } elseif (! class_exists(__NAMESPACE__.'\CI_DB', false)) {
+    } elseif (!class_exists(__NAMESPACE__ . '\CI_DB', false)) {
         /**
          * @ignore
          */
@@ -176,27 +176,27 @@ function &DB($params = '', $query_builder_override = null)
     }
 
     // Load the DB driver
-    $driver_file = dirname(__FILE__).'/drivers/'.$params['dbdriver'].'/'.$params['dbdriver'].'_driver.php';
+    $driver_file = dirname(__FILE__) . '/drivers/' . $params['dbdriver'] . '/' . $params['dbdriver'] . '_driver.php';
 
-    if (! file_exists($driver_file)) {
+    if (!file_exists($driver_file)) {
         show_error('Invalid DB driver');
     }
 
     require_once $driver_file;
 
     // Instantiate the DB adapter
-    $driver = '\mudassar1\Legacy\Database\CI_DB_'.$params['dbdriver'].'_driver';
+    $driver = '\mudassar1\Legacy\Database\CI_DB_' . $params['dbdriver'] . '_driver';
     /** @var CI_DB $DB */
     $DB = new $driver($params);
 
     // Check for a subdriver
-    if (! empty($DB->subdriver)) {
-        $driver_file = dirname(__FILE__).'/drivers/'.$DB->dbdriver.'/subdrivers/'.$DB->dbdriver.'_'.$DB->subdriver.'_driver.php';
+    if (!empty($DB->subdriver)) {
+        $driver_file = dirname(__FILE__) . '/drivers/' . $DB->dbdriver . '/subdrivers/' . $DB->dbdriver . '_' . $DB->subdriver . '_driver.php';
 
         if (file_exists($driver_file)) {
             require_once $driver_file;
-            $driver = 'CI_DB_'.$DB->dbdriver.'_'.$DB->subdriver.'_driver';
-            $DB = new $driver($params);
+            $driver = 'CI_DB_' . $DB->dbdriver . '_' . $DB->subdriver . '_driver';
+            $DB     = new $driver($params);
         }
     }
 

@@ -34,7 +34,6 @@ class ModelResolver
             $parts = explode('/', $model);
 
             foreach ($parts as $key => $part) {
-//                $parts[$key] = ucfirst($part);
                 $parts[$key] = ($part);
             }
 

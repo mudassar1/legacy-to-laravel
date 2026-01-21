@@ -13,7 +13,8 @@ class LegacyServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton('ci', function ($app) {
-            return get_instance();
+            $ci =& get_instance();
+            return $ci;
         });
 
 
