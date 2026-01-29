@@ -5,7 +5,7 @@
     "keywords": ["codeigniter","codeigniter3", "laravel", "laravel-framework"],
     "homepage": "https://github.com/mudassar1/legacy-to-laravel",
     "license": "MIT",
-    "version": "1.2.0",
+    "version": "1.3.0",
     "authors": [
         {
             "name": "Kenji Suzuki",
@@ -25,8 +25,8 @@
         }
     ],
     "require": {
-        "php": "^8.0",
-        "laravel/framework": "^11.47.0"
+        "php": "^8.0|^8.1|^8.2|^8.3|^8.4|^8.5",
+        "laravel/framework": "^12.0"
     },
     "require-dev": {
         "mikey179/vfsstream": "^1.6.11",
