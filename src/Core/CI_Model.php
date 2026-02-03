@@ -40,7 +40,9 @@ class CI_Model extends \Illuminate\Database\Eloquent\Model
     {
         if (!isset(get_instance()->db)) {
             get_instance()->load->database();
-            get_instance()->db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
+            if(get_instance()->db) {
+                get_instance()->db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode, 'ONLY_FULL_GROUP_BY', ''))");
+            }
         }
     }
 
