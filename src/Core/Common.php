@@ -121,7 +121,7 @@ if (! function_exists('esc')) {
      *
      * @return mixed
      */
-    function esc($data, string $context = 'html', string $encoding = null)
+    function esc($data, string $context = 'html', ?string $encoding = null)
     {
         if (empty($data)) {
             return $data;
